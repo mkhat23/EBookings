@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= "Welcome to " + title %></h1>
+    <h2>Please select your memberID</h2>
+         <select>
+
+    <% for(var i = 0; i < data.length; i++) { %>
+ <p><%= data[i].Member_id %></p>
+		
+		  <option value= data[i]</option>
+		
+<% } %>
+</select>
+   
+  </body>
+</html>
