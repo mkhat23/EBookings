@@ -40,13 +40,15 @@ exports.processBasket = function (basket, memberId, callback) {
     //    return previousValue + '"' + currentValue + '"' + (index !== array.length - 1 ? ',' : '');
     //}, "");
 
+    var orderID = Math.floor(Math.random() * (1000 - 10 + 1)) + 10;
     var i;
     for (i = 0; i < basket.length; i++) {
         console.log("BASKET ARRAY", basket);
 
         var bookFormatsString = basket[i].Book_formats.join();
+        console.log("book format",bookFormatsString);
         var sqlValues = [
-            [1, dateFormat(now, "yyyy-mm-dd h:MM:ss"), basket[i].Book_ref, basket[i].Book_price, bookFormatsString, memberId]
+            [orderID, dateFormat(now, "yyyy-mm-dd h:MM:ss"), basket[i].Book_ref, basket[i].Book_price, bookFormatsString, memberId]
         ];
 
         var sqlQuery = 'INSERT INTO orders (Order_id, Order_date, Book_ref, Book_price, Formats_ordered, Member_id) VALUES ?';
