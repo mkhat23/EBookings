@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    $('[data-toggle="tooltip"]').tooltip(); // Enable on screen help
+
     var signin = function (login, onSuccess, onFailure) {
         $.post('/session', {memberId: login})
             .done(function (data) {
@@ -31,9 +33,11 @@ $(document).ready(function () {
 
             //when clicking on row, show details
             var rows = $('.table tr');
-            rows.click(function () {
+            rows.click(function (e) {
+                if(e.target.classList.contains('no-click'))
+                    return;
                 var index = $(this).index();
-                showDetails(livres[index]);
+                showDetails(livres[index-1]);
             });
         });
 
@@ -187,7 +191,9 @@ $(document).ready(function () {
 
             $.each(books, function (i, book) {
 
+
                 var table = $(".table-basket");
+                table.html("");
                 var row = $('<tr/>');
                 row.addClass("bookRow" + book.Book_ref)
                 row.append($('<td/>').text(book.Book_ref));
@@ -221,11 +227,11 @@ $(document).ready(function () {
             $.ajax({
                 type: "POST",
                 url: "/basket/checkout",
-                success: function () {
-                    showOrderConfirmed()
-                    showConfirmedAlert()
+                success: function (data) {
+                    showOrderConfirmed(data.orderId);
+                    showConfirmedAlert();
 
-                },
+                }
             });
         });
 
@@ -235,26 +241,16 @@ $(document).ready(function () {
 
     };
 
-    var showOrderConfirmed = function () {
+    var showOrderConfirmed = function (orderId) {
         $(".screen-basket").hide();
         $(".screen-confirmed").show();
+        $(".orderID").append(orderId);
 
     };
 
     var showConfirmedAlert = function () {
         $(".alert-confirmed").show();
     };
-
-
-// function add (a, b, cb) {
-// 	cb(a+b);
-// }
-
-
-// add(3, 4, function (result) {
-// 	console.log(result);
-// })
-//
 
 
 });

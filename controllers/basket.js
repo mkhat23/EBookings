@@ -56,7 +56,7 @@ exports.processBasket = function (basket, memberId, callback) {
         connection.query(sqlQuery, [sqlValues], function (err, order) {
             if (!err) {
                 console.log("Order confirmed", order);
-                callback(null);
+                callback(null, orderID);
             } else {
                 console.log('Error while performing Query.', err, sqlValues, basket);
                 callback(err);

@@ -37,13 +37,13 @@ router.post('/basket/checkout', function (req, res) {
                 res.status(500).end();
                 return;
             }
-            basketController.processBasket(basket, memberId, function (err) {
+            basketController.processBasket(basket, memberId, function (err, orderId) {
                 if (err) {
                     res.status(500).end();
                     return;
                 }
                 console.log("Basket processed", basket);
-                res.status(200).end();
+                res.json({orderId: orderId});
 
             });
 
